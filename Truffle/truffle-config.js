@@ -1,3 +1,7 @@
+var HDWalletProvider = require("truffle-hdwallet-provider");
+const MNEMONIC =
+  "mountain ginger session main whip inform monitor silent kidney dawn swim slim";
+
 module.exports = {
   // Uncommenting the defaults below
   // provides for an easier quick-start with Ganache.
@@ -12,6 +16,25 @@ module.exports = {
       chainId: 1337,
       network_id: 1337,
     },
+  },
+  ropsten: {
+    provider: function () {
+      return new HDWalletProvider(
+        MNEMONIC,
+        "https://ropsten.infura.io/v3/f801c56dfa7e4daeb24eed8291e79129"
+      );
+    },
+    network_id: 3,
+    gas: 4000000, //make sure this gas allocation isn't over 4M, which is the max
+  },
+  rinkeby: {
+    provider: function () {
+      return new HDWalletProvider(
+        `${process.env.MNEMONIC}`,
+        `https://rinkeby.infura.io/v3/${process.env.INFURA_ID}`
+      );
+    },
+    network_id: 4,
   },
   //
   // Truffle DB is currently disabled by default; to enable it, change enabled:
@@ -34,4 +57,8 @@ module.exports = {
   //     },
   //   },
   // },
+  plugins: ["truffle-plugin-verify"],
+  api_keys: {
+    etherscan: "1VDYNYWRKD7BUSNRETEZU8IKUS6TF3U4D6",
+  },
 };
